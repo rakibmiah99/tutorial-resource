@@ -1,0 +1,76 @@
+<html>
+
+    <script>
+
+        //get Lowest Common Multiple
+        function getLowestCommonMultiple(...numbers){
+            let gcf = getHeightCommonFactor(...numbers)
+            let total_of_numbers_by_multiply = numbers.reduce((acc, val) => acc * val);
+            return total_of_numbers_by_multiply / gcf;
+        }
+
+
+        function getHeightCommonFactor(...numbers){
+            let commonFactors = getCommonFactors(...numbers);
+            return Math.max(...commonFactors);
+        }
+
+        function getCommonFactors(...numbers){
+            numbers = numbers.map((number) => getFactors(number));
+
+            return numbers[0].filter(function (factor){
+                let match = true;
+                for(let i = 0; i < numbers.length; i++){
+                    if (!numbers[i].includes(factor)){
+                        match = false;
+                        break;
+                    }
+                }
+                return match
+            })
+        }
+
+
+
+        function getFactors(num) {
+            const factors = [];
+            for (let i = 1; i <= Math.sqrt(num); i++) {
+                if (num % i === 0) {
+                    let result = num / i; //ভাগফল
+                    factors.push(i);
+                    factors.push(result);
+                }
+            }
+            let uniqueFactors = Array.from(new Set(factors));
+            //Assending Sort
+            return uniqueFactors.sort();
+        }
+
+
+        // দুটি সংখ্যার LCM নির্ধারণের জন্য একটি ফাংশন
+        /*function lcm(a, b) {
+            return Math.abs(a * b) / getHeightCommonFactor(a, b);
+        }*/
+
+        //copy
+        function lcm(...numbers) {
+            return Math.abs(numbers.reduce((acc, val) => acc * val)) / getHeightCommonFactor(...numbers);
+        }m
+
+        // console.log(lcm(4, 5, 6, 7, 8, 9, 10, 12))
+
+        // n সংখ্যার জন্য LCM নির্ধারণের জন্য একটি ফাংশন
+        function lcmOfArray(numbers) {
+            return numbers.reduce((acc, num) => {
+                let lc = lcm(acc, num);
+                console.log(lc);
+
+                return lc;
+            });
+        }
+
+        // উদাহরণস্বরূপ ব্যবহার
+        const numbers = [4, 5, 6, 7, 8, 9, 10, 12];
+        console.log(`LCM of [${numbers.join(', ')}] is:`, lcmOfArray(numbers));
+    </script>
+</html>
